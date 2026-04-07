@@ -1105,20 +1105,7 @@ function renderDay(){
 
   return '<div class="page active" id="pg-day">'+
     '<div class="sticky-hdr">'+
-      '<div style="padding:14px 16px 10px">'+
-        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'+
-          '<button class="nav-btn" id="btn-back">&#8592;</button>'+
-          '<div style="flex:1;min-width:0">'+
-            '<div style="font-size:16px;font-weight:800;display:flex;align-items:center;gap:7px;flex-wrap:wrap">'+
-              (isToday?'<span style="font-size:10px;background:linear-gradient(135deg,#8b7fd4,#3b9fd6);color:#fff;padding:2px 8px;border-radius:10px;font-weight:700">TODAY</span>':'')+
-              DAY_NAMES[dateObj.getDay()]+
-              tmplBadge+
-            '</div>'+
-            '<div style="font-size:12px;color:#8878b8;font-weight:600">'+dateLabel+'</div>'+
-          '</div>'+
-          '<button class="btn-weekly-go" id="btn-go-weekly">🗓️ 이번 주 목표</button>'+
-          '<button class="btn-tmpl-open" id="btn-open-tmpl">📝 템플릿</button>'+
-        '</div>'+
+      '<div style="padding:12px 14px 10px">'+'<div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">'+'<div style="flex-shrink:0;line-height:0;position:relative">'+'<svg width=\"44\" height=\"44\" viewBox=\"0 0 44 44\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"bgG\" cx=\"50%\" cy=\"50%\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#e2d8f8\"/><stop offset=\"100%\" stop-color=\"#c4b0e8\"/></radialGradient><radialGradient id=\"starG\" cx=\"50%\" cy=\"35%\" r=\"70%\"><stop offset=\"0%\" stop-color=\"#fffbe8\"/><stop offset=\"45%\" stop-color=\"#f8c07a\"/><stop offset=\"100%\" stop-color=\"#f09050\"/></radialGradient></defs><circle cx=\"22\" cy=\"22\" r=\"21\" fill=\"url(#bgG)\"/><path d=\"M22 5 C23 13 22 22 22 22 C22 22 31 21 39 22 C31 23 22 22 22 22 C22 22 23 31 22 39 C21 31 22 22 22 22 C22 22 13 23 5 22 C13 21 22 22 22 22 C22 22 21 13 22 5 Z\" fill=\"url(#starG)\" opacity=\"0.96\"/><path d=\"M11 9.5 C11 9.5 10.3 11 11 11.8 C11.7 11 11 9.5 11 9.5 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 9.5 11 8.5 11.8 C9.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 11.7 13 11 14 C10.3 13 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 12.5 11 13.5 11.8 C12.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M33 9.5 C33 9.5 32.3 11 33 11.8 C33.7 11 33 9.5 33 9.5 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 31.5 11 30.5 11.8 C31.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 33.7 13 33 14 C32.3 13 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 34.5 11 35.5 11.8 C34.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><circle cx=\"22\" cy=\"5\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/><circle cx=\"29\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"29\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"22\" cy=\"39\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/></svg>'+'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">'+'<span id="day-prog-circle-text" style="font-size:10px;font-weight:900;color:#fff;text-shadow:0 1px 3px rgba(80,40,160,.6)">'+prog+'<span style="font-size:7px">%</span></span>'+'</div>'+'</div>'+'<div style="flex:1;min-width:0">'+'<div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px;flex-wrap:wrap">'+(isToday?'<span style="font-size:10px;background:linear-gradient(135deg,#8b7fd4,#3b9fd6);color:#fff;padding:2px 8px;border-radius:10px;font-weight:700">TODAY</span>':'')+DAY_NAMES[dateObj.getDay()]+tmplBadge+'</div>'+'<div style="font-size:11px;color:#8878b8;font-weight:600">'+dateLabel+'</div>'+'</div>'+'<button class="btn-weekly-go" id="btn-go-weekly">🗓️ 이번주 목표</button>'+'<button class="btn-tmpl-open" id="btn-open-tmpl">📝 템플릿</button>'+'<button class="nav-btn" id="btn-back">&#8592;</button>'+'</div>'+
         '<div class="top-bar"><div class="top-bar-fill'+(prog===100?' high':'')+'" style="width:'+prog+'%"></div></div>'+
       '</div>'+
       '<div class="day-tabs-bar" id="day-tabs-bar">'+dayTabsH+'</div>'+
@@ -1349,6 +1336,8 @@ function bindDaySections(){
       var prog=dayProg(ST.dayData),pColor=prog===100?'#4cba7a':prog>60?'#9080d8':'#3b9fd6';
       var fill=document.querySelector('.top-bar-fill');
       if(fill){fill.style.width=prog+'%';fill.className='top-bar-fill'+(prog===100?' high':'');}
+      var circleEl=document.getElementById('day-prog-circle-text');
+      if(circleEl){circleEl.innerHTML=prog+'<span style="font-size:7px">%</span>';}
       var pEl=document.querySelector('#pg-day .sticky-hdr [style*="font-size:26px"]');
       if(pEl){pEl.innerHTML=prog+'<span style="font-size:13px">%</span>';pEl.style.color=pColor;}
       var s=SECTIONS.find(function(x){return x.key===sec;});
@@ -1440,7 +1429,8 @@ function renderWeekModal(){
     if(tgt===0)return false;
     return (m.checks||[]).filter(Boolean).length>=tgt;
   }).length;
-  var missBadge=mTotal ? mDone+'/'+mTotal+' 완료' : '0/0 완료';
+  var mAll=(wData.missions||[]).length||3;
+  var missBadge=mDone+'/'+mAll+' 완료';
   var missionsH='';
   (wData.missions||[]).forEach(function(m,mi){missionsH+=renderMissionCard(m,mi);});
 
@@ -1484,16 +1474,16 @@ function renderWeekModal(){
   return '<div class="page active" id="pg-weekly">'+
     '<div class="sticky-hdr">'+
       '<div style="padding:14px 16px 10px">'+
-        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'+
-          '<button class="nav-btn" id="btn-close-modal">&#8592;</button>'+
-          '<div style="flex:1">'+
+        '<div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">'+'<div style="flex-shrink:0;line-height:0;position:relative">'+'<svg width=\"44\" height=\"44\" viewBox=\"0 0 44 44\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"bgG\" cx=\"50%\" cy=\"50%\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#e2d8f8\"/><stop offset=\"100%\" stop-color=\"#c4b0e8\"/></radialGradient><radialGradient id=\"starG\" cx=\"50%\" cy=\"35%\" r=\"70%\"><stop offset=\"0%\" stop-color=\"#fffbe8\"/><stop offset=\"45%\" stop-color=\"#f8c07a\"/><stop offset=\"100%\" stop-color=\"#f09050\"/></radialGradient></defs><circle cx=\"22\" cy=\"22\" r=\"21\" fill=\"url(#bgG)\"/><path d=\"M22 5 C23 13 22 22 22 22 C22 22 31 21 39 22 C31 23 22 22 22 22 C22 22 23 31 22 39 C21 31 22 22 22 22 C22 22 13 23 5 22 C13 21 22 22 22 22 C22 22 21 13 22 5 Z\" fill=\"url(#starG)\" opacity=\"0.96\"/><path d=\"M11 9.5 C11 9.5 10.3 11 11 11.8 C11.7 11 11 9.5 11 9.5 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 9.5 11 8.5 11.8 C9.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 11.7 13 11 14 C10.3 13 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 12.5 11 13.5 11.8 C12.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M33 9.5 C33 9.5 32.3 11 33 11.8 C33.7 11 33 9.5 33 9.5 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 31.5 11 30.5 11.8 C31.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 33.7 13 33 14 C32.3 13 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 34.5 11 35.5 11.8 C34.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><circle cx=\"22\" cy=\"5\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/><circle cx=\"29\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"29\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"22\" cy=\"39\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/></svg>'+'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">'+'<span id="wk-prog-circle-text" style="font-size:10px;font-weight:900;color:#fff;text-shadow:0 1px 3px rgba(80,40,160,.6)">'+prog+'<span style="font-size:7px">%</span></span>'+'</div>'+'</div>'+        '<div style="flex:1">'+
             '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
               '<span style="font-size:17px;font-weight:800;color:#2a1f5a">Weekly Plan</span>'+
               '<span class="tag" style="background:rgba(220,210,255,.6);color:#7060c8;border:1px solid rgba(180,170,220,.5)">W'+wn+'</span>'+
             '</div>'+
             '<div style="font-size:12px;color:#8878b8;margin-top:2px">'+wLabel+'</div>'+
           '</div>'+
-          '<div style="text-align:right"><div style="font-size:22px;font-weight:800;color:'+pColor+';line-height:1">'+prog+'<span style="font-size:12px">%</span></div><div style="font-size:10px;color:#8878b8">달성률</div></div>'+
+          '<button class="btn-weekly-go" id="btn-wk-today">✨ 오늘 루틴</button>'+
+          '<button class="btn-tmpl-open" id="btn-wk-tmpl">📝 템플릿</button>'+
+          '<button class="nav-btn" id="btn-close-modal">&#8592;</button>'+
         '</div>'+
         '<div class="wk-prog-bar"><div class="wk-prog-fill'+(prog===100?' done':'')+'" style="width:'+prog+'%"></div></div>'+
       '</div>'+
@@ -1697,6 +1687,16 @@ function bindWeekPage(){ bindWeekModal(); }
 
 function bindWeekModal(){
   document.getElementById('btn-close-modal').onclick=closeWeekModal;
+  var btnWkToday=document.getElementById('btn-wk-today');
+  if(btnWkToday) btnWkToday.onclick=function(){
+    closeWeekModal();
+    setTimeout(function(){ openDay(todayStr()); }, 50);
+  };
+  var btnWkTmpl=document.getElementById('btn-wk-tmpl');
+  if(btnWkTmpl) btnWkTmpl.onclick=function(){
+    ST.tmplFromCalendar=false;
+    openTmplPanel();
+  };
   /* Week section tabs scroll */
   var stickyHdr=document.querySelector('#pg-weekly .sticky-hdr');
   document.querySelectorAll('.day-tab[data-wksect]').forEach(function(btn){
@@ -1750,7 +1750,7 @@ function bindWeekModal(){
         row.style.background=g.completed?'rgba(195,240,215,.45)':'';
       }
       /* Update badge */
-      var done=ST.weekData.goals.filter(function(x){return x.text&&x.completed;}).length;
+      var done=ST.weekData.goals.filter(function(x){return x.completed;}).length;
       var allBadges=document.querySelectorAll('.wk-done-badge');
       if(allBadges[0])allBadges[0].textContent=done+'/'+ST.weekData.goals.length+' 완료';
     };
@@ -1781,14 +1781,15 @@ function bindWeekModal(){
           var r2=this.closest('.goal-row');
           if(r2){var i2=r2.querySelector('.goal-inp');if(i2){i2.style.textDecoration=g2.completed&&g2.text?'line-through':'none';i2.style.color=g2.completed&&g2.text?'#8878b8':'#1e3a5f';}}
           this.className='btn-goal-check '+(g2.completed?'on':'off');
-          var d2=ST.weekData.goals.filter(function(x){return x.text&&x.completed;}).length;
+          var d2=ST.weekData.goals.filter(function(x){return x.completed;}).length;
           var b2=document.querySelectorAll('.wk-done-badge');
           if(b2[0])b2[0].textContent=d2+'/'+ST.weekData.goals.length+' 완료';
         };
       });
       /* update badge count */
       var allB=document.querySelectorAll('.wk-done-badge');
-      if(allB[0])allB[0].textContent='0/'+ST.weekData.goals.length+' 완료';
+      var curDone=ST.weekData.goals.filter(function(x){return x.completed;}).length;
+      if(allB[0])allB[0].textContent=curDone+'/'+ST.weekData.goals.length+' 완료';
       card.querySelector('.goal-inp[data-idx="'+n+'"]').focus();
     }
   };
@@ -1813,6 +1814,8 @@ function updateModalProgress(){
   var prog=weekProg(ST.weekData),pColor=prog===100?'#4cba7a':prog>60?'#9080d8':'#3b9fd6';
   var fill=document.querySelector('.wk-prog-fill');
   if(fill){fill.style.width=prog+'%';fill.className='wk-prog-fill'+(prog===100?' done':'');}
+  var wCircleEl=document.getElementById('wk-prog-circle-text');
+  if(wCircleEl){wCircleEl.innerHTML=prog+'<span style="font-size:7px">%</span>';}
   var pEl=document.querySelector('#pg-weekly [style*="font-size:22px"]');
   if(pEl){pEl.innerHTML=prog+'<span style="font-size:12px">%</span>';pEl.style.color=pColor;}
   /* update wk-done-badges: 0=goals, 1=habits, 2=missions */
@@ -1856,7 +1859,17 @@ function rebuildWeekModal(){
 ══════════════════════════════════ */
 function openDay(date){ST.page='day';ST.currentDate=date;ST.dayData=getDay(date);render();}
 function openWeekModal(ws){ST.prevPage=ST.page;ST.page='weekly';ST.weekModalStart=ws;ST.weekData=getWeek(ws);render();}
-function closeWeekModal(){ST.page=ST.prevPage||'calendar';render();}
+function closeWeekModal(){
+  if(ST.prevPage==='day'&&ST.currentDate){
+    ST.page='day';
+    /* re-load dayData for the exact date user was on */
+    ST.dayData=getDay(ST.currentDate);
+    render();
+  } else {
+    ST.page='calendar';
+    render();
+  }
+}
 
 /* ══════════════════════════════════
    TEMPLATE STORAGE
