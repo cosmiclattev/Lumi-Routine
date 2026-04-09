@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>☁️ My Routine</title>
+<title>Lumi✨Routine</title>
 <style>
 /* ─ RESET ─────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -671,7 +671,32 @@ function showToast(msg){var el=document.getElementById('toast');el.textContent=m
 /* ══════════════════════════════════
    STATE
 ══════════════════════════════════ */
-var ST={page:'calendar',prevPage:'calendar',calYear:new Date().getFullYear(),calMonth:new Date().getMonth(),currentDate:null,dayData:null,weekModalOpen:false,weekModalStart:null,weekData:null,tmplPanel:false,tmplEdit:false,tmplEditData:null,tmplLoadPopup:false,tmplEditSection:'morning',tmplActiveItem:null,tmplHistory:[],tmplHistIdx:-1};
+var ST={page:'calendar',navStack:[],calYear:new Date().getFullYear(),calMonth:new Date().getMonth(),currentDate:null,dayData:null,weekModalOpen:false,weekModalStart:null,weekData:null,tmplPanel:false,tmplEdit:false,tmplEditData:null,tmplLoadPopup:false,tmplEditSection:'morning',tmplActiveItem:null,tmplHistory:[],tmplHistIdx:-1};
+
+/* ── Navigation stack helpers ── */
+function pushNav(){
+  ST.navStack.push({
+    page: ST.page,
+    currentDate: ST.currentDate,
+    weekModalStart: ST.weekModalStart
+  });
+  /* Cap stack at 20 entries */
+  if(ST.navStack.length>20) ST.navStack.shift();
+}
+function popNav(){
+  var prev=ST.navStack.pop();
+  if(!prev){ ST.page='calendar'; render(); return; }
+  ST.page=prev.page;
+  if(prev.page==='day'&&prev.currentDate){
+    ST.currentDate=prev.currentDate;
+    ST.dayData=getDay(prev.currentDate);
+  } else if(prev.page==='weekly'&&prev.weekModalStart){
+    ST.weekModalStart=prev.weekModalStart;
+    ST.weekData=getWeek(prev.weekModalStart);
+  }
+  render();
+}
+
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
@@ -1105,7 +1130,7 @@ function renderDay(){
 
   return '<div class="page active" id="pg-day">'+
     '<div class="sticky-hdr">'+
-      '<div style="padding:12px 14px 10px">'+'<div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">'+'<div style="flex-shrink:0;line-height:0;position:relative">'+'<svg width=\"44\" height=\"44\" viewBox=\"0 0 44 44\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"bgG\" cx=\"50%\" cy=\"50%\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#e2d8f8\"/><stop offset=\"100%\" stop-color=\"#c4b0e8\"/></radialGradient><radialGradient id=\"starG\" cx=\"50%\" cy=\"35%\" r=\"70%\"><stop offset=\"0%\" stop-color=\"#fffbe8\"/><stop offset=\"45%\" stop-color=\"#f8c07a\"/><stop offset=\"100%\" stop-color=\"#f09050\"/></radialGradient></defs><circle cx=\"22\" cy=\"22\" r=\"21\" fill=\"url(#bgG)\"/><path d=\"M22 5 C23 13 22 22 22 22 C22 22 31 21 39 22 C31 23 22 22 22 22 C22 22 23 31 22 39 C21 31 22 22 22 22 C22 22 13 23 5 22 C13 21 22 22 22 22 C22 22 21 13 22 5 Z\" fill=\"url(#starG)\" opacity=\"0.96\"/><path d=\"M11 9.5 C11 9.5 10.3 11 11 11.8 C11.7 11 11 9.5 11 9.5 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 9.5 11 8.5 11.8 C9.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 11.7 13 11 14 C10.3 13 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 12.5 11 13.5 11.8 C12.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M33 9.5 C33 9.5 32.3 11 33 11.8 C33.7 11 33 9.5 33 9.5 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 31.5 11 30.5 11.8 C31.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 33.7 13 33 14 C32.3 13 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 34.5 11 35.5 11.8 C34.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><circle cx=\"22\" cy=\"5\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/><circle cx=\"29\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"29\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"22\" cy=\"39\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/></svg>'+'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">'+'<span id="day-prog-circle-text" style="font-size:10px;font-weight:900;color:#fff;text-shadow:0 1px 3px rgba(80,40,160,.6)">'+prog+'<span style="font-size:7px">%</span></span>'+'</div>'+'</div>'+'<div style="flex:1;min-width:0">'+'<div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px;flex-wrap:wrap">'+(isToday?'<span style="font-size:10px;background:linear-gradient(135deg,#8b7fd4,#3b9fd6);color:#fff;padding:2px 8px;border-radius:10px;font-weight:700">TODAY</span>':'')+DAY_NAMES[dateObj.getDay()]+tmplBadge+'</div>'+'<div style="font-size:11px;color:#8878b8;font-weight:600">'+dateLabel+'</div>'+'</div>'+'<button class="btn-weekly-go" id="btn-go-weekly">🗓️ 이번주 목표</button>'+'<button class="btn-tmpl-open" id="btn-open-tmpl">📝 템플릿</button>'+'<button class="nav-btn" id="btn-back">&#8592;</button>'+'</div>'+
+      '<div style="padding:12px 14px 10px">'+'<div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">'+'<div style="flex-shrink:0;line-height:0;position:relative">'+'<svg width=\"44\" height=\"44\" viewBox=\"0 0 44 44\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"bgG\" cx=\"50%\" cy=\"50%\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#e2d8f8\"/><stop offset=\"100%\" stop-color=\"#c4b0e8\"/></radialGradient><radialGradient id=\"starG\" cx=\"50%\" cy=\"35%\" r=\"70%\"><stop offset=\"0%\" stop-color=\"#fffbe8\"/><stop offset=\"45%\" stop-color=\"#f8c07a\"/><stop offset=\"100%\" stop-color=\"#f09050\"/></radialGradient></defs><circle cx=\"22\" cy=\"22\" r=\"21\" fill=\"url(#bgG)\"/><path d=\"M22 5 C23 13 22 22 22 22 C22 22 31 21 39 22 C31 23 22 22 22 22 C22 22 23 31 22 39 C21 31 22 22 22 22 C22 22 13 23 5 22 C13 21 22 22 22 22 C22 22 21 13 22 5 Z\" fill=\"url(#starG)\" opacity=\"0.96\"/><path d=\"M11 9.5 C11 9.5 10.3 11 11 11.8 C11.7 11 11 9.5 11 9.5 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 9.5 11 8.5 11.8 C9.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 11.7 13 11 14 C10.3 13 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 12.5 11 13.5 11.8 C12.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M33 9.5 C33 9.5 32.3 11 33 11.8 C33.7 11 33 9.5 33 9.5 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 31.5 11 30.5 11.8 C31.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 33.7 13 33 14 C32.3 13 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 34.5 11 35.5 11.8 C34.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><circle cx=\"22\" cy=\"5\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/><circle cx=\"29\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"29\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"22\" cy=\"39\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/></svg>'+'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">'+'<span id="day-prog-circle-text" style="font-size:10px;font-weight:900;color:#fff;text-shadow:0 1px 3px rgba(80,40,160,.6)">'+prog+'<span style="font-size:7px">%</span></span>'+'</div>'+'</div>'+'<div style="flex:1;min-width:0">'+'<div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px;flex-wrap:wrap">'+DAY_NAMES[dateObj.getDay()]+(isToday?'<span style="font-size:10px;background:linear-gradient(135deg,#8b7fd4,#3b9fd6);color:#fff;padding:2px 8px;border-radius:10px;font-weight:700">Today</span>':'')+tmplBadge+'</div>'+'<div style="font-size:11px;color:#8878b8;font-weight:600">'+dateLabel+'</div>'+'</div>'+'<button class="btn-weekly-go" id="btn-go-weekly">🗓️ 이번주 목표</button>'+'<button class="btn-tmpl-open" id="btn-open-tmpl">📝 템플릿</button>'+'<button class="nav-btn" id="btn-back">&#8592;</button>'+'</div>'+
         '<div class="top-bar"><div class="top-bar-fill'+(prog===100?' high':'')+'" style="width:'+prog+'%"></div></div>'+
       '</div>'+
       '<div class="day-tabs-bar" id="day-tabs-bar">'+dayTabsH+'</div>'+
@@ -1255,7 +1280,7 @@ function renderReflection(r){
 }
 
 function bindDay(){
-  document.getElementById('btn-back').onclick=function(){ST.page='calendar';render();};
+  document.getElementById('btn-back').onclick=function(){ popNav(); };
   document.getElementById('btn-open-tmpl').onclick=function(){openTmplPanel();};
   document.getElementById('btn-go-weekly').onclick=function(){
     var ws=getWeekStart(ST.currentDate);
@@ -1473,13 +1498,13 @@ function renderWeekModal(){
 
   return '<div class="page active" id="pg-weekly">'+
     '<div class="sticky-hdr">'+
-      '<div style="padding:14px 16px 10px">'+
+      '<div style="padding:12px 14px 10px">'+
         '<div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">'+'<div style="flex-shrink:0;line-height:0;position:relative">'+'<svg width=\"44\" height=\"44\" viewBox=\"0 0 44 44\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"bgG\" cx=\"50%\" cy=\"50%\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#e2d8f8\"/><stop offset=\"100%\" stop-color=\"#c4b0e8\"/></radialGradient><radialGradient id=\"starG\" cx=\"50%\" cy=\"35%\" r=\"70%\"><stop offset=\"0%\" stop-color=\"#fffbe8\"/><stop offset=\"45%\" stop-color=\"#f8c07a\"/><stop offset=\"100%\" stop-color=\"#f09050\"/></radialGradient></defs><circle cx=\"22\" cy=\"22\" r=\"21\" fill=\"url(#bgG)\"/><path d=\"M22 5 C23 13 22 22 22 22 C22 22 31 21 39 22 C31 23 22 22 22 22 C22 22 23 31 22 39 C21 31 22 22 22 22 C22 22 13 23 5 22 C13 21 22 22 22 22 C22 22 21 13 22 5 Z\" fill=\"url(#starG)\" opacity=\"0.96\"/><path d=\"M11 9.5 C11 9.5 10.3 11 11 11.8 C11.7 11 11 9.5 11 9.5 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 9.5 11 8.5 11.8 C9.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 11.7 13 11 14 C10.3 13 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M11 11.8 C11 11.8 12.5 11 13.5 11.8 C12.5 12.5 11 11.8 11 11.8 Z\" fill=\"#fff\" opacity=\"0.85\"/><path d=\"M33 9.5 C33 9.5 32.3 11 33 11.8 C33.7 11 33 9.5 33 9.5 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 31.5 11 30.5 11.8 C31.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 33.7 13 33 14 C32.3 13 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><path d=\"M33 11.8 C33 11.8 34.5 11 35.5 11.8 C34.5 12.5 33 11.8 33 11.8 Z\" fill=\"#fff\" opacity=\"0.8\"/><circle cx=\"22\" cy=\"5\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/><circle cx=\"29\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"6.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"15\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"37.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"6.5\" cy=\"29\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"29\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"15\" cy=\"37.5\" r=\"0.7\" fill=\"#fff\" opacity=\"0.4\"/><circle cx=\"22\" cy=\"39\" r=\"1\" fill=\"#fff\" opacity=\"0.5\"/></svg>'+'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">'+'<span id="wk-prog-circle-text" style="font-size:10px;font-weight:900;color:#fff;text-shadow:0 1px 3px rgba(80,40,160,.6)">'+prog+'<span style="font-size:7px">%</span></span>'+'</div>'+'</div>'+        '<div style="flex:1">'+
-            '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
-              '<span style="font-size:17px;font-weight:800;color:#2a1f5a">Weekly Plan</span>'+
-              '<span class="tag" style="background:rgba(220,210,255,.6);color:#7060c8;border:1px solid rgba(180,170,220,.5)">W'+wn+'</span>'+
+            '<div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px;flex-wrap:wrap">'+
+              '<span style="color:#2a1f5a">Weekly Plan</span>'+
+              '<span class="tag" style="font-size:10px;background:rgba(220,210,255,.6);color:#7060c8;border:1px solid rgba(180,170,220,.5);padding:2px 8px;border-radius:10px;font-weight:700">W'+wn+'</span>'+
             '</div>'+
-            '<div style="font-size:12px;color:#8878b8;margin-top:2px">'+wLabel+'</div>'+
+            '<div style="font-size:11px;color:#8878b8;font-weight:600">'+wLabel+'</div>'+
           '</div>'+
           '<button class="btn-weekly-go" id="btn-wk-today">✨ 오늘 루틴</button>'+
           '<button class="btn-tmpl-open" id="btn-wk-tmpl">📝 템플릿</button>'+
@@ -1686,11 +1711,14 @@ function refreshTrackerTable(){
 function bindWeekPage(){ bindWeekModal(); }
 
 function bindWeekModal(){
-  document.getElementById('btn-close-modal').onclick=closeWeekModal;
+  document.getElementById('btn-close-modal').onclick=function(){ popNav(); };
   var btnWkToday=document.getElementById('btn-wk-today');
   if(btnWkToday) btnWkToday.onclick=function(){
-    closeWeekModal();
-    setTimeout(function(){ openDay(todayStr()); }, 50);
+    pushNav();
+    ST.page='day';
+    ST.currentDate=todayStr();
+    ST.dayData=getDay(ST.currentDate);
+    render();
   };
   var btnWkTmpl=document.getElementById('btn-wk-tmpl');
   if(btnWkTmpl) btnWkTmpl.onclick=function(){
@@ -1857,19 +1885,9 @@ function rebuildWeekModal(){
 /* ══════════════════════════════════
    NAVIGATION
 ══════════════════════════════════ */
-function openDay(date){ST.page='day';ST.currentDate=date;ST.dayData=getDay(date);render();}
-function openWeekModal(ws){ST.prevPage=ST.page;ST.page='weekly';ST.weekModalStart=ws;ST.weekData=getWeek(ws);render();}
-function closeWeekModal(){
-  if(ST.prevPage==='day'&&ST.currentDate){
-    ST.page='day';
-    /* re-load dayData for the exact date user was on */
-    ST.dayData=getDay(ST.currentDate);
-    render();
-  } else {
-    ST.page='calendar';
-    render();
-  }
-}
+function openDay(date){pushNav();ST.page='day';ST.currentDate=date;ST.dayData=getDay(date);render();}
+function openWeekModal(ws){pushNav();ST.page='weekly';ST.weekModalStart=ws;ST.weekData=getWeek(ws);render();}
+function closeWeekModal(){ popNav(); }
 
 /* ══════════════════════════════════
    TEMPLATE STORAGE
