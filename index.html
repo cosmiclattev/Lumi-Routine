@@ -1474,7 +1474,7 @@ function renderWeekModal(){
     if(tgt===0)return false;
     return (m.checks||[]).filter(Boolean).length>=tgt;
   }).length;
-  var configuredMissions=(wData.missions||[]).filter(function(m){return (m.name&&m.name.trim())||(m.target&&m.target>0);});
+  var configuredMissions=(wData.missions||[]).filter(function(m){return (m.name&&m.name.trim())&&(m.target&&m.target>0);});
   var mDoneConf=configuredMissions.filter(function(m){var tgt=m.target||0;if(!tgt)return false;return (m.checks||[]).filter(Boolean).length>=tgt;}).length;
   var missBadge=configuredMissions.length ? mDoneConf+'/'+configuredMissions.length+' 완료' : '0/0 완료';
   var missionsH='';
@@ -1673,15 +1673,25 @@ function bindMissionEvents(){
 }
 
 function refreshMissionHeader(){
-  var mTotal=0,mDone=0;
-  (ST.weekData.missions||[]).forEach(function(m){mTotal+=m.target||0;(m.checks||[]).forEach(function(c){if(c)mDone++;});});
-  /* Update the mission badge inside the unified section header */
-  var allBadges=document.querySelectorAll('.wk-done-badge');
-  /* badges are: 0=goals, 1=habits, 2=missions */
-  if(allBadges[2]){
-    var mt2=(ST.weekData.missions||[]).length;
-    var md2=(ST.weekData.missions||[]).filter(function(m){var tgt=m.target||0;if(!tgt)return false;return (m.checks||[]).filter(Boolean).length>=tgt;}).length;
-    allBadges[2].textContent=md2+'/'+mt2+' 완료';
+  /* 설정된 미션만 카운트: 이름 또는 횟수가 설정된 것 */
+  var configured=(ST.weekData.missions||[]).filter(function(m){
+    return (m.name&&m.name.trim())&&(m.target&&m.target>0);
+  });
+  var done=configured.filter(function(m){
+    var tgt=m.target||0;
+    if(!tgt) return false;
+    return (m.checks||[]).filter(Boolean).length>=tgt;
+  }).length;
+  var badgeText=configured.length ? done+'/'+configured.length+' 완료' : '0/0 완료';
+  /* Find badge specifically within mission section to avoid index issues */
+  var missSection=document.getElementById('wk-sect-mission');
+  if(missSection){
+    var badge=missSection.querySelector('.wk-done-badge');
+    if(badge) badge.textContent=badgeText;
+  } else {
+    /* fallback: use index */
+    var allBadges=document.querySelectorAll('.wk-done-badge');
+    if(allBadges[2]) allBadges[2].textContent=badgeText;
   }
 }
 
@@ -1895,7 +1905,7 @@ function updateModalProgress(){
     badges[1].textContent=hcfg.length?hd+'/'+hcfg.length+' 완료':'0/0 완료';
   }
   if(badges[2]){
-    var mcfg=(ST.weekData.missions||[]).filter(function(m){return (m.name&&m.name.trim())||(m.target&&m.target>0);});
+    var mcfg=(ST.weekData.missions||[]).filter(function(m){return (m.name&&m.name.trim())&&(m.target&&m.target>0);});
     var mdc=mcfg.filter(function(m){var tgt=m.target||0;if(!tgt)return false;return (m.checks||[]).filter(Boolean).length>=tgt;}).length;
     badges[2].textContent=mcfg.length?mdc+'/'+mcfg.length+' 완료':'0/0 완료';
   }
